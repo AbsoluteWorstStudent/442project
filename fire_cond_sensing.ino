@@ -21,7 +21,7 @@ int anaRead;          //read analog data from sensor
 float sensormV;       //reading converted to mV
 double tempC;         //actual temp in celcius
 double tempF;         //actual temp in Farenheit
-float luxDetected=10;
+float luxDetected;
 
 SoftwareSerial mySerial(4, 2); // RX, TX    //initialize HC-06
 
@@ -48,7 +48,6 @@ void setup() {
   tsl.setGain(TSL2591_GAIN_MED);    //25x Gain. Recommended for General Purpose
   tsl.setTiming(TSL2591_INTEGRATIONTIME_100MS);  //Shorter integration for quicker 
                                                  //detection of spike in lux (fire)
-                                                    Serial.println("Start comm123unication."); //Confirm successful connection to HC-06
 }
 
 void loop() {
@@ -68,10 +67,13 @@ void loop() {
   Serial.print("Lux: ");                    //Print Lux reading to Serial
   Serial.println(luxDetected);
   mySerial.write(luxDetected);            //Send Lux reading to HC-06
+  delay(500);
   mySerial.write(tempF);                  //Send Farenheit temp to HC-06 for Transmission.
   Serial.println("Bluetooth Transmission Complete.");   //Confirm Succesfull Transmission.
   delay(1000);
-  //If Fire Conditions met
-  //if(tempF > && ___){
+  //If Fire Conditions met, activate servo -> Extinquish Fire
+  /*if(tempF > FireTempF && luxDetect > fireLux){
+  /
   //INSERT SERVO ACTIVATION CODE HERE
+  }*/
 }
